@@ -71,7 +71,6 @@ public class Server {
 			line = br.readLine();
 			token = new StringTokenizer(line);
 			cm = token.nextToken();
-			System.out.println(cm);
 
 			if (cm.equalsIgnoreCase("uname")) {
 				System.out.println("un");
@@ -91,8 +90,7 @@ public class Server {
 			} else if (cm.equalsIgnoreCase("login")) {
 				if (uDAO.checkUname(uname)) {					
 					if (uDAO.login(uname, pass)) {
-						pw.println(".");
-						pw.flush();
+						chat(br, pw);
 						break;
 					} else {
 						pw.println("Login Khong Thanh Cong");
@@ -117,6 +115,25 @@ public class Server {
 		}
 
 	}
+	
+	private void chat(BufferedReader br, PrintWriter pw) throws IOException {
+	    String message;
+	    pw.println("Da vao chat");
+	    pw.flush();
+	    while (true) {
+	    	message = br.readLine();
+	        if ("exit".equalsIgnoreCase(message)) {
+	            pw.println("exit");
+	            pw.flush();
+	            break;
+	        }else {
+	        	pw.println("Server: " + message);
+		        pw.flush();
+	        }
+	    }
+	}
+
+	
 	
 	private void generateKeyAndIv() throws Exception {
 		KeyGenerator keyGen = KeyGenerator.getInstance("AES");

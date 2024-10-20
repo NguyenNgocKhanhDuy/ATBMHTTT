@@ -38,7 +38,7 @@ public class Client {
 
 			String response = br.readLine();
 			System.out.println(response);
-			if (".".equalsIgnoreCase(response)) {
+			if ("exit".equalsIgnoreCase(response)) {
 				System.out.println("Client Thoat");
 				break;
 			}
