@@ -44,8 +44,6 @@ public class RSA_AES {
         keyPair = generator.generateKeyPair();
         publicKey = keyPair.getPublic();
         privateKey = keyPair.getPrivate();
-
-        savePublicPrivateKey();
     }
 
     public void savePublicPrivateKey() throws Exception {
@@ -53,6 +51,7 @@ public class RSA_AES {
              ObjectOutputStream oos = new ObjectOutputStream(fos)) {
             oos.writeObject(publicKey);
             oos.writeObject(privateKey);
+
         }
     }
 
@@ -98,6 +97,7 @@ public class RSA_AES {
 
             dos.writeUTF(encryptKey);
             dos.writeUTF(encryptIv);
+
         }
     }
 
@@ -117,7 +117,6 @@ public class RSA_AES {
         generateKeyAndIv();
         encryptKey = encryptKeyAES(secretKey);
         encryptIv = encryptIvAES(iv);
-        saveKeyAndIv(des);
 
 
         try (FileOutputStream fos = new FileOutputStream(des);
@@ -140,6 +139,12 @@ public class RSA_AES {
             }
         }
 
+        publicKey = null;
+        privateKey = null;
+        secretKey = null;
+        iv = null;
+        encryptKey = null;
+        encryptIv = null;
 
         return true;
     }
@@ -170,9 +175,9 @@ public class RSA_AES {
 
     public static void main(String[] args) throws Exception {
         RSA_AES rsa = new RSA_AES();
-        String file = "./src/lab4/f.jpg";
-        String encryptFile = "./src/lab4/encryptFile.jpg";
-        String decryptFile = "./src/lab4/decryptFile.jpg";
+        String file = "./src/lab4/123.txt";
+        String encryptFile = "./src/lab4/encryptFile.txt";
+        String decryptFile = "./src/lab4/decryptFile.txt";
         rsa.encryptFileWithAESAndRSA(file, encryptFile);
         rsa.decryptFileWithAESAndRSA(encryptFile, decryptFile);
     }
